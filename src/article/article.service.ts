@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-
+import { PrismaService } from '../prisma/prisma.service'; // 💡
 // 定义一篇文章的结构
 export interface Article {
   id: number;
@@ -11,31 +11,31 @@ export interface Article {
 
 @Injectable()
 export class ArticleService {
-  // 💡 用一个内存数组模拟数据库
-  private articles: Article[] = [
-    { id: 1, title: '第一篇测试文章', content: 'NestJS 真好玩！' },
-    { id: 2, title: '第二篇测试文章', content: '今天开始学后端。' },
-  ];
-  private idCounter = 3; // 用来生成自增 ID
+  // 💡 构造函数注入：把大后方的数据库小秘书借过来用
+  constructor(private readonly prisma: PrismaService) {}
 
   // 1. 创建文章
-  create(createArticleDto: CreateArticleDto) {
-    const newArticle = {
-      id: this.idCounter++,
-      ...createArticleDto, // 把前端传来的 title 和 content 展开放进来
-    };
-    this.articles.push(newArticle);
+  async create(createArticleDto: CreateArticleDto) {
+    const newArticle = await this.prisma.client.dbArticle.create({
+      data: {
+        title: createArticleDto.content,
+        content: createArticleDto.title,
+      },
+    });
     return { message: '创建成功', data: newArticle };
   }
 
   // 2. 查询所有文章
-  findAll() {
-    return { message: '查询成功', data: this.articles };
+  async findAll() {
+    const articles = await this.prisma.client.dbArticle.findMany();
+    return { message: '查询成功', data: articles };
   }
 
   // 3. 根据 ID 查询单篇
-  findOne(id: number) {
-    const article = this.articles.find((item) => item.id === id);
+  async findOne(id: number) {
+    const article = await this.prisma.client.dbArticle.findUnique({
+      where: { id: id },
+    });
     if (!article) {
       // NestJS 内置的错误处理，会自动返回 404 状态码
       throw new NotFoundException(`ID 为 ${id} 的文章不存在！`);
@@ -44,27 +44,25 @@ export class ArticleService {
   }
 
   // 4. 修改文章
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    const articleIndex = this.articles.findIndex((item) => item.id === id);
-    if (articleIndex === -1) {
-      throw new NotFoundException(`无法修改：ID 为 ${id} 的文章不存在！`);
-    }
-    // 把旧数据和新修改的数据合并
-    this.articles[articleIndex] = {
-      ...this.articles[articleIndex],
-      ...updateArticleDto,
-    };
-    return { message: '修改成功', data: this.articles[articleIndex] };
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    // 先查在不在，不在直接触发上面的 404 报错
+    await this.findOne(id);
+
+    const updatedArticle = await this.prisma.client.dbArticle.update({
+      where: { id: id },
+      data: updateArticleDto, // Prisma 非常智能，前端没传的字段会自动忽略不改
+    });
+    return { message: '修改成功', data: updatedArticle };
   }
 
   // 5. 删除文章
-  remove(id: number) {
-    const articleIndex = this.articles.findIndex((item) => item.id === id);
-    if (articleIndex === -1) {
-      throw new NotFoundException(`无法删除：ID 为 ${id} 的文章不存在！`);
-    }
-    // 从数组中剔除
-    const deleted = this.articles.splice(articleIndex, 1);
-    return { message: '删除成功', data: deleted[0] };
+  async remove(id: number) {
+    // 先查在不在
+    await this.findOne(id);
+
+    const deletedArticle = await this.prisma.client.dbArticle.delete({
+      where: { id: id },
+    });
+    return { message: '数据库删除成功', data: deletedArticle };
   }
 }
