@@ -13,9 +13,19 @@ datasource db {
   provider = "postgresql"
 }
 
+// 文章表
 model DbArticle {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
+  createdAt DateTime @default(now())
+}
+
+// 登录用户表
+model DbUser {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique // 账号，必须是唯一的，不能重复注册
+  password  String // 密码（后面我们会存加密后的密文）
+  role      String   @default("user") // 角色：默认为 "user"(普通用户)，也可以是 "admin"(管理员)
   createdAt DateTime @default(now())
 }

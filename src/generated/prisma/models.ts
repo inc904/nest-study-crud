@@ -9,4 +9,5 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/DbArticle'
+export type * from './models/DbUser'
 export type * from './commonInputTypes'

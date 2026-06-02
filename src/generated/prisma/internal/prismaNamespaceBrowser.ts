@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  DbArticle: 'DbArticle'
+  DbArticle: 'DbArticle',
+  DbUser: 'DbUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,6 +79,17 @@ export const DbArticleScalarFieldEnum = {
 } as const
 
 export type DbArticleScalarFieldEnum = (typeof DbArticleScalarFieldEnum)[keyof typeof DbArticleScalarFieldEnum]
+
+
+export const DbUserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type DbUserScalarFieldEnum = (typeof DbUserScalarFieldEnum)[keyof typeof DbUserScalarFieldEnum]
 
 
 export const SortOrder = {

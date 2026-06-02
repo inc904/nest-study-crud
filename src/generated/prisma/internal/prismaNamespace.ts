@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  DbArticle: 'DbArticle'
+  DbArticle: 'DbArticle',
+  DbUser: 'DbUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "dbArticle"
+    modelProps: "dbArticle" | "dbUser"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DbUser: {
+      payload: Prisma.$DbUserPayload<ExtArgs>
+      fields: Prisma.DbUserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DbUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DbUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        findFirst: {
+          args: Prisma.DbUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DbUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        findMany: {
+          args: Prisma.DbUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>[]
+        }
+        create: {
+          args: Prisma.DbUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        createMany: {
+          args: Prisma.DbUserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DbUserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>[]
+        }
+        delete: {
+          args: Prisma.DbUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        update: {
+          args: Prisma.DbUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        deleteMany: {
+          args: Prisma.DbUserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DbUserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DbUserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>[]
+        }
+        upsert: {
+          args: Prisma.DbUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbUserPayload>
+        }
+        aggregate: {
+          args: Prisma.DbUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDbUser>
+        }
+        groupBy: {
+          args: Prisma.DbUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DbUserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DbUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DbUserCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -525,6 +600,17 @@ export const DbArticleScalarFieldEnum = {
 } as const
 
 export type DbArticleScalarFieldEnum = (typeof DbArticleScalarFieldEnum)[keyof typeof DbArticleScalarFieldEnum]
+
+
+export const DbUserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type DbUserScalarFieldEnum = (typeof DbUserScalarFieldEnum)[keyof typeof DbUserScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -715,6 +801,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   dbArticle?: Prisma.DbArticleOmit
+  dbUser?: Prisma.DbUserOmit
 }
 
 /* Types for Logging */
