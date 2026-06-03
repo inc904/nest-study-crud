@@ -7,12 +7,17 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles/roles.guard';
+import { Roles } from 'src/auth/roles/roles.decorator';
 
 @Controller('article') // 基础路由：http://localhost:3000/article
+@UseGuards(AuthGuard, RolesGuard) // 💡 核心核心：给整个部门装上安检闸门！
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
@@ -42,6 +47,7 @@ export class ArticleController {
   }
 
   @Delete(':id') // DELETE /article/1 (删)
+  @Roles('admin') // 💡 核心核心：只有删除接口被贴上了“必须是 admin”的硬核标签！
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.articleService.remove(id);
   }
