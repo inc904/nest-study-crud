@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   DbArticle: 'DbArticle',
-  DbUser: 'DbUser'
+  DbUser: 'DbUser',
+  DbStudent: 'DbStudent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "dbArticle" | "dbUser"
+    modelProps: "dbArticle" | "dbUser" | "dbStudent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DbStudent: {
+      payload: Prisma.$DbStudentPayload<ExtArgs>
+      fields: Prisma.DbStudentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DbStudentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DbStudentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        findFirst: {
+          args: Prisma.DbStudentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DbStudentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        findMany: {
+          args: Prisma.DbStudentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>[]
+        }
+        create: {
+          args: Prisma.DbStudentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        createMany: {
+          args: Prisma.DbStudentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DbStudentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>[]
+        }
+        delete: {
+          args: Prisma.DbStudentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        update: {
+          args: Prisma.DbStudentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DbStudentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DbStudentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DbStudentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DbStudentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DbStudentPayload>
+        }
+        aggregate: {
+          args: Prisma.DbStudentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDbStudent>
+        }
+        groupBy: {
+          args: Prisma.DbStudentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DbStudentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DbStudentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DbStudentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -611,6 +686,18 @@ export const DbUserScalarFieldEnum = {
 } as const
 
 export type DbUserScalarFieldEnum = (typeof DbUserScalarFieldEnum)[keyof typeof DbUserScalarFieldEnum]
+
+
+export const DbStudentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  age: 'age',
+  address: 'address',
+  tags: 'tags',
+  createdAt: 'createdAt'
+} as const
+
+export type DbStudentScalarFieldEnum = (typeof DbStudentScalarFieldEnum)[keyof typeof DbStudentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -802,6 +889,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   dbArticle?: Prisma.DbArticleOmit
   dbUser?: Prisma.DbUserOmit
+  dbStudent?: Prisma.DbStudentOmit
 }
 
 /* Types for Logging */

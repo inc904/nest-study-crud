@@ -29,3 +29,13 @@ model DbUser {
   role      String   @default("user") // 角色：默认为 "user"(普通用户)，也可以是 "admin"(管理员)
   createdAt DateTime @default(now())
 }
+
+// 学生表
+model DbStudent {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique // 账号，必须是唯一的，不能重复注册
+  age       Int
+  address   String
+  tags      String[]
+  createdAt DateTime @default(now())
+}

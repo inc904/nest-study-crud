@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 
 import { ConfigModule } from '@nestjs/config'; // 💡 引入官方配置模块
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config'; // 💡 引入官方配置模块
     ArticleModule,
     PrismaModule,
     AuthModule,
+    StudentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

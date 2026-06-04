@@ -49,3 +49,8 @@ export type DbArticle = Prisma.DbArticleModel
  * 
  */
 export type DbUser = Prisma.DbUserModel
+/**
+ * Model DbStudent
+ * 
+ */
+export type DbStudent = Prisma.DbStudentModel

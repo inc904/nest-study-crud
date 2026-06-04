@@ -10,4 +10,5 @@
  */
 export type * from './models/DbArticle'
 export type * from './models/DbUser'
+export type * from './models/DbStudent'
 export type * from './commonInputTypes'
